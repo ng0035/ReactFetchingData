@@ -1,9 +1,30 @@
-# ReactFetchingData
+# React Fetching Data from REDDIT API
 This is a react application for fetching data from an API. The API used is Reddit API. The tutorial followed to build the app was https://redux.js.org/advanced/. This is official website of Redux.org. 
 
 The main concepts used in developing this application are the following:
 
 1. State
+
+In Redux, all the application state is stored as a single object. 
+You'll often find that you need to store some data, as well as some UI state, in the state tree. This is fine, but try to keep the data separate from the UI state.
+
+Syntax for defining state:
+
+                 {
+                  key1: 'value1',
+                  object: [
+                    {
+                      text: 'Consider using Redux',
+                      completed: true
+                    },
+                    {
+                      text: 'Keep all state in a single tree',
+                      completed: false
+                    }
+                  ]
+                }
+
+Thus, in a similar way we will list all the keys and values and objects required to desgin our state. Check state in source code for reference.
 
 
 2. Actions
@@ -63,6 +84,30 @@ Syntax for actionstypes
 The action creators we require to handle these action types are similar to what we have learned earlier. Check the source code for reference.
 
 3.Reducers
+
+We use reducers to handle actions. It functions like this:
+ 
+       (previousState, action) -> (nextState)
+
+Syntax for defining a reducer: The reducer switches the action type and according to the action type, any keys to the state can be updated.
+
+        function reducername(state = initialState, action) {
+          switch (action.type) {
+            case action_name:
+              return Object.assign({}, state, {
+                key: action.key //value of action to be assigned
+              })
+            default:
+              return state
+          }
+        }
+Note -          
+#IMMUTABILITY OF STATE-
+        
+We don't mutate the state. We create a copy with Object.assign(). Object.assign(state, { key: action.key}) is also wrong: it will mutate the first argument. You must supply an empty object as the first parameter. You can also enable the object spread operator proposal to write { ...state, ...newState } instead.
+
+We return the previous state in the default case. It's important to return the previous state for any unknown action.
+
 4.Containers
 5.Store
 
